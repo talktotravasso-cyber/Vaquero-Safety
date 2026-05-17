@@ -1,0 +1,15 @@
+{{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Start n8n",
+        "type": "shell",
+        "command": "npx n8n",
+        "isBackground": true,
+        "runOptions": {
+          "runOn": "folderOpen"
+        },
+        "problemMatcher": []
+      }
+    ]
+  }
