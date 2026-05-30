@@ -1,0 +1,29 @@
+# Credentials — never commit
+.env
+secrets/
+*.key
+*.pem
+
+# Office temp lock files
+~$*
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Node
+node_modules/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Logs (operational only — not compliance evidence)
+logs/scrape/*.json
+logs/scrape/errors.log
+
+# Client assets (read-only reference — not versioned)
+client-assets/
