@@ -27,3 +27,10 @@ logs/scrape/errors.log
 
 # Client assets (read-only reference — not versioned)
 client-assets/
+
+# Build output
+dist/
+.next/
+
+# Coverage reports
+coverage/
