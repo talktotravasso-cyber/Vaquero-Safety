@@ -33,7 +33,7 @@
 
 ---
 
-### [2025-01-01] | ADR-001 | Push-Only Delivery Model (No Client Portal Login Required)
+### [2026-05-23] | ADR-001 | Push-Only Delivery Model (No Client Portal Login Required)
 
 **Decision:** All client-facing notifications, approvals, and document deliveries are push-delivered via email, SMS, Teams, and mobile app. Clients never log into a portal to retrieve compliance actions.
 
@@ -52,7 +52,7 @@
 
 ---
 
-### [2025-01-01] | ADR-002 | Site-Per-Client SharePoint Architecture
+### [2026-05-23] | ADR-002 | Site-Per-Client SharePoint Architecture
 
 **Decision:** Each client receives a dedicated SharePoint site collection (`vaquero.sharepoint.com/sites/[client_id]`) with no shared document libraries across client sites. No cross-client permission inheritance is permitted at any layer.
 
@@ -71,7 +71,7 @@
 
 ---
 
-### [2025-01-01] | ADR-003 | Compliance Event Log (CEL) as System of Record — Not Make.com Execution History
+### [2026-05-23] | ADR-003 | Compliance Event Log (CEL) as System of Record — Not Make.com Execution History
 
 **Decision:** The SharePoint Compliance Event Log (CEL) per client site is the sole legal audit trail for all compliance events. Make.com execution history is classified as supplementary operational log only and MUST NOT be cited as compliance evidence.
 
@@ -90,7 +90,7 @@
 
 ---
 
-### [2025-01-01] | ADR-004 | Role-Based Signatory Model (Not Individual-Based)
+### [2026-05-23] | ADR-004 | Role-Based Signatory Model (Not Individual-Based)
 
 **Decision:** DocuSign signing authority is stored and managed by role (e.g., "Safety Manager," "Executive") not by individual name. Make.com looks up the current holder of each role from the SharePoint Signatories List at envelope creation time.
 
@@ -109,7 +109,7 @@
 
 ---
 
-### [2025-01-01] | ADR-005 | Email as Mandatory Minimum Approval Channel
+### [2026-05-23] | ADR-005 | Email as Mandatory Minimum Approval Channel
 
 **Decision:** Email is the mandatory minimum delivery channel for all approval workflows regardless of contact notification preference. SMS, Teams, and mobile app push notifications may supplement but cannot substitute for email on any action requiring an Approve or Amend response.
 
@@ -128,7 +128,7 @@
 
 ---
 
-### [2025-01-01] | ADR-006 | Approve / Amend Only — No Reject Action
+### [2026-05-23] | ADR-006 | Approve / Amend Only — No Reject Action
 
 **Decision:** Client-facing approval workflows present only two action options: Approve and Amend. Reject is not a permitted action in the platform.
 
@@ -146,7 +146,7 @@
 
 ---
 
-### [2025-01-01] | ADR-007 | Human-in-the-Loop Gate for Regulatory Change Classification
+### [2026-05-23] | ADR-007 | Human-in-the-Loop Gate for Regulatory Change Classification
 
 **Decision:** No client-facing action (SOP update, certification alert change, informational notice) may fire as a result of a detected regulatory change until a named compliance advisor has reviewed and classified the change. AI assistance may flag anomalies but classification requires human sign-off.
 
@@ -165,7 +165,7 @@
 
 ---
 
-### [2025-01-01] | ADR-008 | DocuSign Certificate of Completion as Primary Compliance Evidence
+### [2026-05-23] | ADR-008 | DocuSign Certificate of Completion as Primary Compliance Evidence
 
 **Decision:** The DocuSign Certificate of Completion plus signed PDF, auto-archived to the client's SharePoint site on `envelope-completed` webhook event, is the primary compliance evidence for safety program documents, SOPs, policy statements, training acknowledgements, orientation sign-offs, and most recurring compliance documents.
 
@@ -184,7 +184,7 @@
 
 ---
 
-### [2025-01-01] | ADR-009 | Legal Review Flag — Confined Space Entry Permits and Wet Signature Risk
+### [2026-05-23] | ADR-009 | Legal Review Flag — Confined Space Entry Permits and Wet Signature Risk
 
 **Decision:** DocuSign is used as the default execution method for confined space entry permits pending legal confirmation. A [FLAG FOR LEGAL REVIEW] status is recorded in the platform for this document type until Alberta OHS confirms electronic entry permits are acceptable under OHS Code Part 5 s.45.
 
@@ -203,7 +203,7 @@
 
 ---
 
-### [2025-01-01] | ADR-010 | Make.com as Automation Layer — Not System of Record
+### [2026-05-23] | ADR-010 | Make.com as Automation Layer — Not System of Record
 
 **Decision:** Make.com is the workflow automation execution layer only. It is not a system of record. All compliance data, document versions, event logs, and audit trails reside in SharePoint. Make.com scenarios are stateless relative to compliance data — they read from and write to SharePoint; they do not hold state.
 
@@ -222,7 +222,7 @@
 
 ---
 
-### [2025-01-01] | ADR-011 | Dispatcher Pattern for Multi-Client SOP Propagation at Scale
+### [2026-05-23] | ADR-011 | Dispatcher Pattern for Multi-Client SOP Propagation at Scale
 
 **Decision:** SOP propagation to 50+ clients is implemented as a dispatcher-to-child-scenario pattern. A master dispatcher scenario iterates client records and sends a webhook per client to an independent child scenario. Each child scenario handles one client's full propagation cycle independently.
 
@@ -240,7 +240,7 @@
 
 ---
 
-### [2025-01-01] | ADR-012 | Canada Central Data Residency Lock
+### [2026-05-23] | ADR-012 | Canada Central Data Residency Lock
 
 **Decision:** All client data — including SharePoint site collections, CEL lists, document libraries, and all Make.com data written to SharePoint — is anchored to the Canada Central Azure region. No client personal information or compliance record is permitted to reside outside Canada Central.
 
@@ -259,7 +259,7 @@
 
 ---
 
-### [2025-01-01] | ADR-013 | Safety Credentials Verified by Deterministic Python Script — LLM Scoring Prohibited
+### [2026-05-23] | ADR-013 | Safety Credentials Verified by Deterministic Python Script — LLM Scoring Prohibited
 
 **Decision:** All verification of COR, NCSO, and CRSP certifications is handled exclusively by `scripts/verify-compliance.py` (deterministic Python). LLM scoring, AI inference, or probabilistic evaluation of safety credentials is absolutely prohibited as a substitute or supplement to script execution.
 
@@ -278,7 +278,7 @@
 
 ---
 
-### [2025-01-01] | ADR-014 | Stage 8 Environmental and Well Tracking Workflows Are Temporary Pending Legal Review
+### [2026-05-23] | ADR-014 | Stage 8 Environmental and Well Tracking Workflows Are Temporary Pending Legal Review
 
 **Decision:** Stage 8 workflows for soil/water sampling, well tracking, and environmental monitoring logs are implemented as store-and-notify only. No automated regulatory submission to Alberta Environment, AER, or any other government body is built until legal and environmental consultant review is complete per client.
 
@@ -297,7 +297,7 @@
 
 ---
 
-### [2025-01-01] | ADR-015 | Mobile App + Office Scan Hybrid Field Data Capture with Metadata Distinction
+### [2026-05-23] | ADR-015 | Mobile App + Office Scan Hybrid Field Data Capture with Metadata Distinction
 
 **Decision:** Field data capture supports two paths with explicit metadata distinction: (1) Primary — mobile app (online and offline sync), capturing GPS, device timestamp, worker digital signature, and form version. (2) Backup — paper form with office scan upload, capturing paper_record_date, uploading_user_id, site_location, reason_paper_used. Both paths are valid compliance records; paper scan records are flagged for compliance advisor acknowledgement and noted separately in COR audit packages.
 
@@ -316,7 +316,7 @@
 
 ---
 
-### [2025-01-01] | ADR-016 | MCP Credential Architecture — Windows System Environment Variables
+### [2026-05-23] | ADR-016 | MCP Credential Architecture — Windows System Environment Variables
 
 **Decision:** Cursor MCP server credentials (Supabase access tokens) are stored exclusively as Windows System Environment Variables using the `%CURSOR_MCP_[CLIENTNAME]%` naming convention. `.env` files are not used for MCP credentials due to process-scope read failures with N8N. MCP JSON configuration references environment variables only — no hardcoded tokens in `mcp.json`.
 
@@ -341,3 +341,136 @@
 *All subsequent decisions MUST be appended below this line following the entry format defined at the top of this document. Do not modify entries above this line.*
 
 ---
+
+### [2026-05-30] | ADR-017 | PageCrawl API Token Hardcoded in mcp.json Headers — CREDENTIAL-EXCEPTION-01
+
+**Decision:** The PageCrawl API token is stored directly (hardcoded) in the `headers{}` field of the `pagecrawl` entry in `C:\Users\ajohn\.cursor\mcp.json`. This is a named, documented exception to the credential architecture defined in ADR-016.
+
+**Rationale:** The standard credential architecture (ADR-016) requires all MCP tokens to be stored as Windows System Environment Variables and referenced via `%ENV_VAR%` syntax. This was attempted for PageCrawl — `%PAGECRAWL_API_KEY%` was correctly set as a Windows System Environment Variable. However, Cursor does not expand `%ENV_VAR%` references inside `headers{}` fields at runtime. Expansion only works reliably in `args[]` fields. PageCrawl's MCP transport is HTTP headers only — it has no `args[]` path. The result was a persistent `401 Unauthorized` error despite the environment variable being correctly set. The root cause was confirmed by: (1) `echo %PAGECRAWL_API_KEY%` returning the correct token value in Command Prompt, and (2) the `401` persisting after Cursor restart, ruling out env var absence as the cause. No alternative transport method exists for this server. Hardcoding in `mcp.json` is the only functional path. `[CONFIDENCE: 3 — root cause confirmed by elimination]`
+
+**Risk Assessment:**
+- `mcp.json` is a local machine file at `C:\Users\ajohn\.cursor\mcp.json` — outside `C:\Projects\Vaquero_Safety_Inc\` and never in Git
+- PageCrawl token scope is limited to PageCrawl page monitoring — no access to Supabase, SharePoint, or any compliance data
+- Token is revocable and regenerable instantly from the PageCrawl API settings page
+- Single-developer machine — no shared environment risk
+- Risk classification: **Low** — scoped, revocable, local-only, no compliance data access
+
+**Compliance Justification:** PIPA Alberta s.34 — this entry constitutes the named accountability record for the intentional deviation. The exception is bounded: it applies to one token, one local file, one non-compliance-data service. The credential does not appear in any project file, source code, Git repository, or compliance record. The `mcp.json` file must never be committed to any Git repository — confirmed at time of decision.
+
+**Mitigations in Place:**
+1. `mcp.json` confirmed outside Git repo scope
+2. PageCrawl token noted for rotation if machine is compromised
+3. This ADR entry serves as the audit record — the deviation is intentional and documented, not accidental
+4. Token must be rotated and this entry updated (new ADR superseding this one) if the machine is shared, rebuilt, or compromised
+
+**Rollback Plan:** If Cursor adds native `%ENV_VAR%` expansion support in `headers{}` fields in a future release: (1) Add `PAGECRAWL_API_KEY` back as a Windows System Environment Variable. (2) Replace the hardcoded token in `mcp.json` with `%PAGECRAWL_API_KEY%`. (3) Restart Cursor and confirm no `401` error. (4) Append a new ADR entry superseding this one, marking CREDENTIAL-EXCEPTION-01 as resolved. (5) Rotate the previously hardcoded token.
+
+**Linked File(s):**
+- `~/.cursor/mcp.json` (`C:\Users\ajohn\.cursor\mcp.json`)
+- `references/mcp-config.md`
+- `.claude/rules/memory-decisions.md` (CREDENTIAL-EXCEPTION-01 tag)
+
+**Exception Tag:** `CREDENTIAL-EXCEPTION-01`
+
+**Status:** Active — Exception in force pending Cursor `headers{}` env var expansion fix
+
+---
+
+### [2026-05-30] | ADR-018 | Obsidian API Token Hardcoded in mcp.json — CREDENTIAL-EXCEPTION-02
+
+**Decision:** The Obsidian Local REST API token is stored directly (hardcoded) in the `mcp.json` entry for the `obsidian` server, passed via the `--header` flag in `args[]`. This is a named, documented exception to the credential architecture defined in ADR-016. Additionally, the Obsidian Local REST API plugin uses plain `http` (not `https`) for localhost connections — the URL is `http://127.0.0.1:27123/mcp/`.
+
+**Rationale:** Two sequential issues were encountered configuring the Obsidian MCP. First, the initial URL used `https://127.0.0.1:27123/mcp/` which produced a `fetch failed` error — the Obsidian Local REST API plugin runs over plain `http` on loopback and does not use TLS. This was corrected to `http`. Second, the standard credential approach (`%CURSOR_MCP_OBSIDIAN%` as a Windows System Environment Variable passed via `--header "Authorization: Bearer %CURSOR_MCP_OBSIDIAN%"` in `args[]`) failed to authenticate. The `--header` flag in `mcp-remote` passes the value as a literal string at the subprocess level — `%ENV_VAR%` expansion does not occur in this context on Windows in the same way it does for direct `args[]` values. The root cause is the same class of limitation as ADR-017: Cursor's Windows subprocess environment does not expand `%ENV_VAR%` references inside header-bearing arguments reliably. Hardcoding the token in the `--header` value is the only functional resolution. `[CONFIDENCE: 3 — confirmed by authentication failure with env var set correctly]`
+
+**Risk Assessment:**
+- `mcp.json` is a local machine file at `C:\Users\ajohn\.cursor\mcp.json` — outside `C:\Projects\Vaquero_Safety_Inc\` and never in Git
+- Obsidian Local REST API token scope is limited to read/write access to the local Obsidian vault — no access to Supabase, SharePoint, or any compliance data
+- Token is revocable from the Obsidian Local REST API plugin settings
+- Single-developer machine — no shared environment risk
+- Risk classification: **Low** — local vault only, no compliance data access, local machine file
+
+**Compliance Justification:** PIPA Alberta s.34 — this entry constitutes the named accountability record for the intentional deviation. The exception is bounded: it applies to one token, one local file, one local-only service (Obsidian vault). The credential does not appear in any project file, source code, Git repository, or compliance record. The `mcp.json` file must never be committed to any Git repository — confirmed at time of decision.
+
+**Mitigations in Place:**
+1. `mcp.json` confirmed outside Git repo scope
+2. Obsidian token noted for rotation if machine is compromised
+3. This ADR entry serves as the audit record — the deviation is intentional and documented, not accidental
+4. Token must be rotated and this entry updated (new ADR superseding this one) if the machine is shared, rebuilt, or compromised
+
+**Rollback Plan:** If `mcp-remote` adds reliable Windows `%ENV_VAR%` expansion in `--header` arguments in a future release: (1) Add `CURSOR_MCP_OBSIDIAN` back as a Windows System Environment Variable. (2) Replace the hardcoded token in the `--header` argument in `mcp.json` with `%CURSOR_MCP_OBSIDIAN%`. (3) Restart Cursor and confirm no authentication error. (4) Append a new ADR entry superseding this one, marking CREDENTIAL-EXCEPTION-02 as resolved. (5) Rotate the previously hardcoded token.
+
+**Linked File(s):**
+- `~/.cursor/mcp.json` (`C:\Users\ajohn\.cursor\mcp.json`)
+- `references/mcp-config.md`
+- `.claude/rules/memory-decisions.md` (CREDENTIAL-EXCEPTION-02 tag)
+
+**Exception Tag:** `CREDENTIAL-EXCEPTION-02`
+
+**Status:** Active — Exception in force pending mcp-remote Windows env var expansion fix
+
+---
+
+### [2026-05-31] | ADR-019 | ROUTING ENGINE AND OBSIDIAN PERSISTENCE ENGINE ESTABLISHED
+
+**Decision:** Two standalone operating rule files created — routing-engine.md and obsidian-persistence.md — governing output routing, tool selection, search triggers, and Obsidian knowledge persistence for all Claude Desktop sessions.
+
+**Rationale:** Prior state had no enforced routing between Claude Desktop, Obsidian, and Cursor. Knowledge created in sessions was not persisting reliably. Obsidian vault was inconsistently populated, making it untrustworthy as a future reasoning source. Separate files chosen over embedding in SKILL.md to allow independent evolution and easier targeted consultation. Cursor population of Obsidian explicitly prohibited — knowledge flow is Layer 1 (Claude Desktop) → Layer 2 (Obsidian) → Layer 3 (Cursor) only.
+
+**Compliance Justification:** N/A — internal operational architecture decision. Does not affect CEL, SharePoint compliance evidence, or any client-facing workflow.
+
+**Rollback Plan:** Remove routing-engine.md and obsidian-persistence.md from `.claude/rules/`. Remove Section 16 and Rule 14 from SKILL.md. Revert SKILL.md to v2.1.0. Remove ADR-019 from memory-decisions.md is not permitted — append a supersession note instead.
+
+**Linked File(s):**
+- `.claude/rules/routing-engine.md`
+- `.claude/rules/obsidian-persistence.md`
+- `.claude/rules/memory-decisions.md`
+- `SKILL.md` Section 16 (v2.2.0)
+
+**Status:** Active
+
+---
+
+
+[2026-05-31] | ADR-PENDING-001 | CEL RECONCILIATION MECHANISM
+  Decision:                 Implement a daily Make.com reconciliation scenario that compares expected CEL entries against actual entries written to SharePoint, using a make_scenario_execution_id field and cel_write_confirmed boolean on every CEL record.
+  Rationale:                Make.com operational logs expire at 60 days and are not compliance evidence. Silent scenario failures (timeout, retry, service disruption) can produce CEL gaps or duplicates that are undetectable without a verification layer. CEL integrity is the core architectural differentiator — a gap at audit time has direct regulatory consequence.
+  Compliance Justification: COR audit standard — CEL must provide unbroken event chain for audit period. Alberta OHS Act — incident and training records must be accurate and complete. SKILL.md Rule 12 — CEL is system of record, Make.com logs are not.
+  Rollback Plan:            Remove cel_write_confirmed field and reconciliation scenario. Revert to manual advisor spot-checks of CEL completeness. Accept increased audit risk until replacement mechanism is designed.
+  Linked File(s):           compliance/ARCHITECTURE-DECISIONS.md | Vaquero_Safety_Inc/Architecture/cel-reconciliation-mechanism.md
+  Status:                   Active
+
+
+[2026-05-31] | ADR-PENDING-002 | SOP STAGED PROPAGATION PROTOCOL
+  Decision:                 SOP propagation fires in staged batches — Batch 1 is a single pilot client, Batch 2 is up to 10 clients, Batch 3 is the remainder. A batch_number field and batch_gate_approved boolean are added to the SOP Propagation Tracker. Stage 6 dispatcher reads batch_gate_approved before firing each batch. Batch gate approval is a human action by the compliance advisor.
+  Rationale:                Simultaneous propagation across 50+ clients creates a blast radius where a template error or misclassification reaches every client before detection. Staged batching adds a post-propagation-start detection layer at low operational cost. Dual advisor review before template_status = Ready_for_propagation reduces probability of error but does not eliminate it.
+  Compliance Justification: COR audit standard — SOP currency and version control are auditable elements. Stage 6 existing dual review requirement — SKILL.md Section 8, Stage 6.
+  Rollback Plan:            Remove batch_number and batch_gate_approved fields. Revert Stage 6 dispatcher to simultaneous propagation. Increase pre-propagation review stringency as compensating control.
+  Linked File(s):           compliance/ARCHITECTURE-DECISIONS.md | Vaquero_Safety_Inc/Architecture/sop-staged-propagation-protocol.md
+  Status:                   Active
+
+
+[2026-05-31] | ADR-PENDING-003 | MAKE.COM MIGRATION THRESHOLD
+  Decision:                 Make.com is confirmed as the correct automation layer for 0–30 clients. Migration is triggered when any of the following conditions are met: (a) concurrent device sync events per client regularly approach the 30 req/s ceiling, (b) SOP propagation batch size exceeds 30 clients and batch gates add 48h+ of advisor overhead per propagation event, (c) monthly Make.com operations cost exceeds a founder-defined threshold (value to be set). Preferred migration target is Azure Logic Apps given existing SharePoint/M365 stack alignment.
+  Rationale:                Make.com constraints — 5MB payload ceiling, 30 req/s rate limit, no native idempotency — create a defined scaling failure point. Documenting exit conditions now costs nothing. Discovering the ceiling at 40 clients with no migration plan is a 3–6 month emergency engineering project while clients are live. This is planned technical debt, not an oversight.
+  Compliance Justification: SKILL.md Rule 12 — CEL integrity cannot depend on Make.com reliability at scale. SKILL.md Section 15 — Make.com dependency is an accepted architectural constraint for the build phase.
+  Rollback Plan:            No rollback required — this ADR documents a future migration decision, not a current change. If migration trigger conditions are never reached, Make.com remains the automation layer indefinitely.
+  Linked File(s):           compliance/ARCHITECTURE-DECISIONS.md | Vaquero_Safety_Inc/Architecture/make-com-migration-threshold.md | Vaquero_Safety_Inc/Architecture/make-com-as-mvp-sync-endpoint.md
+  Status:                   Active
+
+
+[2026-05-31] | ADR-PENDING-004 | OFFLINE CEL ENTRY DUAL TIMESTAMP DESIGN
+  Decision:                 All CEL entries written from a mobile device must carry two non-overwriting timestamp fields: event_timestamp_device (device clock at time of action, ISO 8601 UTC) and event_timestamp_server (SharePoint write timestamp, ISO 8601 UTC). A calculated field offline_duration_seconds is derived from the difference. All timestamps stored in UTC; localization at display layer only. Values of offline_duration_seconds exceeding a defined threshold trigger an advisor review flag.
+  Rationale:                A single timestamp overwritten on server receipt records sync time, not event time. For a field inspection completed Tuesday that syncs Thursday, a single timestamp records Thursday — factually incorrect and producing an audit gap. In a COR audit or OHS Act s.33 incident investigation, the distinction between when an event occurred and when it was synced is material. The dual timestamp design is the minimum viable approach to preserve audit integrity for offline events.
+  Compliance Justification: Alberta OHS Act s.33 — incident investigation records must accurately reflect when events occurred. COR audit standard — inspection completion records are auditable with date accuracy requirements. SKILL.md Stage 2 — capture_method field already distinguishes online vs offline sync.
+  Rollback Plan:            Remove event_timestamp_device and offline_duration_seconds fields. Retain event_timestamp_server as the single timestamp. Document the limitation explicitly in the COR evidence package certification process so advisors flag offline records during audit preparation.
+  Linked File(s):           compliance/ARCHITECTURE-DECISIONS.md | Vaquero_Safety_Inc/Architecture/offline-cel-entry-dual-timestamp.md
+  Status:                   Active
+
+
+[2026-05-31] | ADR-PENDING-005 | SYNC CONFLICT RESOLUTION — SERVER-AUTHORITATIVE
+  Decision:                 Sync conflict resolution strategy is server-authoritative with device-timestamp preservation. On sync, the server accepts the CEL entry as written by the device, stamps the server-receipt timestamp, and writes to SharePoint. The device timestamp is preserved exactly as recorded and never overwritten. If a duplicate make_scenario_execution_id is detected, the second write is rejected and flagged for compliance advisor review — not silently merged, not silently discarded. No automated conflict resolution. All conflicts surface to human review.
+  Rationale:                CRDT and operational transformation are designed for concurrent editing of shared documents — not applicable to append-only compliance log entries written once by one device. CEL entries document facts, not states. Conflict on a fact record means something unexpected happened and requires human review, not algorithmic resolution. An auto-merged CEL entry is legally weaker in an OHS incident investigation or COR audit than one that was human-reviewed and confirmed.
+  Compliance Justification: Alberta OHS Act s.33 — incident investigation records must be accurate. COR audit standard — CEL is the evidence source; its integrity is non-negotiable. SKILL.md Rule 12 — CEL is system of record.
+  Rollback Plan:            Remove duplicate detection logic on make_scenario_execution_id. Revert to last-write-wins on all sync writes. Accept increased risk of duplicate or overwritten CEL entries. Implement compensating manual reconciliation by compliance advisor.
+  Linked File(s):           compliance/ARCHITECTURE-DECISIONS.md | Vaquero_Safety_Inc/Architecture/sync-conflict-resolution-strategy.md
+  Status:                   Active
